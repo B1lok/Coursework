@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign-Up</title>
+</head>
+<body>
+
+<h2>Register</h2>
+<form method="POST" action="/auth/sign-up" th:object="${user}">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" th:field="*{email}" id="email" required>
+    </div>
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required/>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" required/>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+<h1 th:if="${emailExist}" th:text="${emailExist}"></h1>
+
+
+
+</body>
+</html>

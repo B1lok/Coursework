@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MySport</title>
+</head>
+<body>
+<h1>Welcome to MySport</h1>
+<h1 th:if="${user}" th:text="${user.getName()}"></h1>
+<div th:each="league : ${leagues}">
+    <a th:text="${league.getName()}" th:href="@{/mySport/{leagueName}(leagueName=${league.getName()})}"></a>
+</div>
+
+
+
+<form action="/auth/logout" method="POST">
+  <button type="submit">Logout</button>
+</form>
+</body>
+</html>

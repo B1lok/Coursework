@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${league.getName()}"></title>
+</head>
+<body>
+
+<div >
+
+    <ul th:each="team: ${league.getTeams()}">
+        <li th:text="${team.getName()}"></li>
+    </ul>
+
+</div>
+
+</body>
+</html>
