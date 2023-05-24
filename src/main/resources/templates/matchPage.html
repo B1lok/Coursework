@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<a th:href="@{/mySport/team/{teamName}(teamName=${game.getFirst_team().getName()})}">
+    <span th:text="${game.getFirst_team().getName()}"></span>
+</a>
+-
+<a th:href="@{/mySport/team/{teamName}(teamName=${game.getSecond_team().getName()})}">
+    <span th:text="${game.getSecond_team().getName()}"></span>
+</a>
+<span th:text="${game.getGameDate()}"></span>
+<h1 th:if="${game.getResult() != null}" th:text="${'Result ' + game.getResult()}"></h1>
+
+<div th:if="${admin}">
+    <h1>Set match Result</h1>
+    <form method="post" th:action="@{/mySport/{leagueName}/{matchId}(leagueName=${game.getLeague().getName()}, matchId=${game.getId()})}">
+        <label for="number1">Team 1 score:</label>
+        <input type="number" id="number1" name="number1" min="0" required>
+
+        <label for="number2">Team 2 score:</label>
+        <input type="number" id="number2" name="number2" min="0" required>
+
+        <input type="submit" value="Submit">
+    </form>
+    <h1>Change match date</h1>
+    <form method="post" th:action="@{/mySport/{leagueName}/{matchId}/changeDate(leagueName=${game.getLeague().getName()}, matchId=${game.getId()})}">
+        <label for="date">Team 1 score:</label>
+        <input type="datetime-local" id="date" name="date"  required>
+        <input type="submit" value="Submit">
+    </form>
+
+</div>
+
+</body>
+</html>

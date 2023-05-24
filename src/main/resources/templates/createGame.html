@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CreateGame</title>
+</head>
+<body>
+
+<h1>Create new Game</h1>
+
+<form method="POST" th:action="@{/mySport/{leagueName}/createGame(leagueName=${league.getName()})}" >
+    <label for="firstTeam">Select first team:</label>
+    <select id="firstTeam" name="firstTeam">
+        <option th:each="team : ${league.getTeams()}" th:value="${team.getName()}" th:text="${team.getName()}"></option>
+    </select>
+    <label for="secondTeam">Select second team:</label>
+    <select id="secondTeam" name="secondTeam">
+        <option th:each="team : ${league.getTeams()}" th:value="${team.getName()}" th:text="${team.getName()}" ></option>
+    </select>
+
+    <input type="hidden" id="league" name="league" th:value="${league.getName()}">
+
+    <label for="date">Date and Time:</label>
+    <input type="datetime-local" id="date" name="gameDate" required>
+
+    <button type="submit">Create</button>
+</form>
+
+<h2 th:if="${sameTeamError}" th:text="${sameTeamError}"></h2>
+
+</body>
+</html>

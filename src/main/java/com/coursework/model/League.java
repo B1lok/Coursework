@@ -2,16 +2,19 @@ package com.coursework.model;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 @Entity
 @Table(name = "league")
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class League {
 
     @Id
@@ -24,6 +27,13 @@ public class League {
 
 
     @OneToMany(mappedBy = "league")
+    @ToString.Exclude
     private List<Team> teams = new ArrayList<>();
+
+    @OneToMany(mappedBy = "league", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Game> games = new ArrayList<>();
+
+
 
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${team.getName()}"></title>
+</head>
+<body>
+
+<h1 th:text="${team.getName()}"></h1>
+<h1 th:if="${team.getCoach() != null}" th:text="${'Team coach - ' + team.getCoach()}"></h1>
+<h2 th:if="${coachAlreadyExist}" th:text="${coachAlreadyExist}"></h2>
+<div th:if="${admin}">
+    <form th:action="@{/mySport/team/{teamName}/setCoach(teamName=${team.getName()})}" method="post">
+        <label for="coachName">Set Coach</label>
+        <input type="text" id="coachName" name="coachName" required>
+        <button type="submit">Create</button>
+    </form>
+</div>
+
+<a th:if="${admin}" th:href="@{/mySport/team/{teamName}/addPlayer(teamName=${team.getName()})}">Create new player</a>
+
+<h1>Squad</h1>
+<div th:each="player : ${team.getPlayers()}">
+    <h3 th:text="${player.getFirstName() + ' Jersey Number ' + player.getJerseyNumber() + ' Position - ' + player.getPosition()}"></h3>
+    <form th:if="${admin}" th:action="@{/mySport/team/{teamName}/deletePlayer(teamName=${team.getName()})}" method="post">
+        <input type="hidden" name="playerId" th:value="${player.getId()}">
+        <button type="submit">Delete</button>
+    </form>
+</div>
+
+<div th:each="game : ${team.getGames()}">
+    <h3>
+        <a th:href="@{/mySport/{leagueName}/{matchId}(leagueName=${team.getLeague().getName()}, matchId=${game.getId()})}"
+           th:text="${game.getFirst_team().getName() + ' - ' + game.getSecond_team().getName() + '   ' + game.getGameDate()}"></a>
+    </h3>
+</div>
+<div th:each="game : ${team.getAwayGames()}">
+    <h3>
+        <a th:href="@{/mySport/{leagueName}/{matchId}(leagueName=${team.getLeague().getName()}, matchId=${game.getId()})}"
+           th:text="${game.getFirst_team().getName() + ' - ' + game.getSecond_team().getName() + '   ' + game.getGameDate()}"></a>
+    </h3>
+</div>
+
+</body>
+</html>

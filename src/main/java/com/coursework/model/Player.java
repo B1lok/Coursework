@@ -3,11 +3,22 @@ package com.coursework.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "player", uniqueConstraints = @UniqueConstraint(columnNames = {"jersey_number", "team_id"}))
 public class Player {
+
+
+    public Player(String firstName, String lastName, Long jerseyNumber, Team team, Position position) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.jerseyNumber = jerseyNumber;
+        this.team = team;
+        this.position = position;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

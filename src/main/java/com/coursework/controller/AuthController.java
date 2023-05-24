@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/auth")
+@SessionAttributes("user")
 public class AuthController {
 
 

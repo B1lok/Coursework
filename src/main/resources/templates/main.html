@@ -7,10 +7,32 @@
 <body>
 <h1>Welcome to MySport</h1>
 <h1 th:if="${user}" th:text="${user.getName()}"></h1>
+<div th:if="${admin}">
+    <a href="/mySport/admin">Go to admin page</a>
+</div>
 <div th:each="league : ${leagues}">
-    <a th:text="${league.getName()}" th:href="@{/mySport/{leagueName}(leagueName=${league.getName()})}"></a>
+   <h1><a th:text="${league.getName()}" th:href="@{/mySport/{leagueName}(leagueName=${league.getName()})}"></a></h1>
 </div>
 
+<h1>Upcoming matches</h1>
+<div th:each="league : ${leagues}">
+    <h1 th:text="${league.getName()}"></h1>
+    <ul th:each="game : ${leagueService.getUpComingLeagueGames(league.getId())}">
+        <li>
+            <a th:href="@{/mySport/{leagueName}/{matchId}(leagueName=${league.getName()}, matchId=${game.getId()})}"
+               th:text="${game.getFirst_team().getName() + ' - ' + game.getSecond_team().getName() + '   ' + game.getGameDate()}"></a>
+        </li>
+    </ul>
+</div>
+<div>
+<form action="/mySport" method="POST">
+    <label>
+        <input type="text" name="query" placeholder="Search..." required>
+    </label>
+    <button type="submit">Search</button>
+</form>
+    <h2 th:if="${noTeamFound}" th:text="${noTeamFound}"></h2>
+</div>
 
 
 <form action="/auth/logout" method="POST">

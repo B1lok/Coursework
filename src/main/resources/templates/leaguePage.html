@@ -5,14 +5,34 @@
     <title th:text="${league.getName()}"></title>
 </head>
 <body>
-
-<div >
-
-    <ul th:each="team: ${league.getTeams()}">
-        <li th:text="${team.getName()}"></li>
+<h1 th:text="${league.getName()}"></h1>
+<div>
+    <h3>See all teams</h3>
+    <ul>
+        <li th:each="team : ${league.getTeams()}"><a th:href="@{/mySport/team/{teamName}(teamName=${team.getName()})}" th:text="${team.getName()}"></a></li>
     </ul>
-
 </div>
+
+<div th:each="game : ${games}">
+    <h3>
+        <a th:href="@{/mySport/{leagueName}/{matchId}(leagueName=${league.getName()}, matchId=${game.getId()})}"
+           th:text="${game.getFirst_team().getName() + ' - ' + game.getSecond_team().getName() + '   ' + game.getGameDate()}"></a>
+    </h3>
+    <form th:if="${admin}" th:action="@{/mySport/{leagueName}/deleteGame(leagueName=${league.getName()})}" method="POST">
+        <input type="hidden" name="gameId" th:value="${game.getId()}">
+        <button type="submit">Delete</button>
+    </form>
+</div>
+
+<div th:if="${admin}">
+    <a th:href="@{/mySport/{leagueName}/createGame(leagueName=${league.getName()})}">Create New Game</a>
+    <a th:href="@{/mySport/{leagueName}/createTeam(leagueName=${league.getName()})}">Create New Team</a>
+</div>
+
+
+
+
+
 
 </body>
 </html>
