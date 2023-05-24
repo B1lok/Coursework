@@ -4,6 +4,8 @@ import com.coursework.dao.TeamRepository;
 import com.coursework.model.Team;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TeamService {
 
@@ -16,7 +18,12 @@ public class TeamService {
 
 
     public Team getTeamByName(String teamName){
-        return repository.findByName(teamName);
+        List<Team> teams = repository.findAll();
+
+        return teams.stream()
+                .filter(team -> team.getName().equalsIgnoreCase(teamName))
+                .findAny()
+                .orElse(null);
     }
 
     public Team searchTeamByName(String teamName){
