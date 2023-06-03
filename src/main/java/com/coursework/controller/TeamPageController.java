@@ -63,6 +63,7 @@ public class TeamPageController {
                             @RequestParam String jerseyNumber,
                             @RequestParam String position){
         if (playerService.playerWithSuchJerseyNumberAlreadyExist(teamService.getTeamByName(teamName),Long.parseLong(jerseyNumber))){
+            model.addAttribute("team", teamService.getTeamByName(teamName));
             model.addAttribute("playerWithSuchJerseyNumberAlreadyExist", "Player with this game number already exist in this team");
             return "addPlayer";
         }

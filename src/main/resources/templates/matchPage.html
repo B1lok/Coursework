@@ -2,19 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Match</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="icon" th:href="@{/img/ball.png}" type="image/x-icon">
 </head>
-<body>
+<body style="background-image: url('/img/lawn.jpg'); background-size: cover; background-position: center;">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand text-success mb-0 me-3 fw-light" href="/mySport">Welcome to My Sport</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
 
-<a th:href="@{/mySport/team/{teamName}(teamName=${game.getFirst_team().getName()})}">
-    <span th:text="${game.getFirst_team().getName()}"></span>
-</a>
--
-<a th:href="@{/mySport/team/{teamName}(teamName=${game.getSecond_team().getName()})}">
-    <span th:text="${game.getSecond_team().getName()}"></span>
-</a>
-<span th:text="${game.getGameDate()}"></span>
-<h1 th:if="${game.getResult() != null}" th:text="${'Result ' + game.getResult()}"></h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <div class="d-flex justify-content-center align-items-center">
+                <a th:href="@{/mySport/team/{teamName}(teamName=${game.getFirst_team().getName()})}" class="btn">
+                    <span th:text="${game.getFirst_team().getName()}" class="h1"></span>
+                </a>
+                <span class="mx-3">-</span>
+                <a th:href="@{/mySport/team/{teamName}(teamName=${game.getSecond_team().getName()})}" class="btn">
+                    <span th:text="${game.getSecond_team().getName()}" class="h1"></span>
+                </a>
+            </div>
+            <h3 th:text="${game.getGameDate()}"></h3>
+            <h3 th:if="${game.getResult() != null}" th:text="${'Result ' + game.getResult()}"></h3>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 th:text="${game.getFirst_team().getName() + ' squad'}" class="card-title"></h4>
+                    <ul th:each="player : ${game.getFirst_team().getPlayers()}" class="list-group">
+                        <li th:text="${player.getFirstName() + ' - Number ' + player.getJerseyNumber() + ' - ' + player.getPosition()}" class="list-group-item"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 th:text="${game.getSecond_team().getName() + ' squad'}" class="card-title"></h4>
+                    <ul th:each="player : ${game.getSecond_team().getPlayers()}" class="list-group">
+                        <li th:text="${player.getFirstName() + ' - Number ' + player.getJerseyNumber() + ' - ' + player.getPosition()}" class="list-group-item"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div th:if="${admin}">
     <h1>Set match Result</h1>

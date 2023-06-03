@@ -108,6 +108,7 @@ public class LeaguePageController {
     public String createTeam(@PathVariable String leagueName, @RequestParam String teamName, Model model){
 
         if (teamService.getTeamByName(teamName) != null) {
+            model.addAttribute("league", leagueService.getLeagueByName(leagueName));
             model.addAttribute("teamAlreadyExist", "This team already exist");
             return "createTeam";
         }
